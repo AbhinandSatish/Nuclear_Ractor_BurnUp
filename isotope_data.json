@@ -1,0 +1,226 @@
+{
+  "U230": {
+    "half_life": 74880.0,
+    "n_gamma": 1e-25,
+    "products": [
+      [
+        "U231",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U231": {
+    "half_life": 15120.0,
+    "n_gamma": 1e-25,
+    "products": [
+      [
+        "Pa231",
+        "decay"
+      ]
+    ]
+  },
+  "Pa231": {
+    "half_life": 1033234000000.0,
+    "n_gamma": 5e-26,
+    "products": [
+      [
+        "U232",
+        "decay"
+      ]
+    ]
+  },
+  "U232": {
+    "half_life": 2173545600.0,
+    "n_gamma": 1e-25,
+    "products": [
+      [
+        "U233",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U233": {
+    "half_life": 5019422400000.0,
+    "n_gamma": 2e-25,
+    "products": [
+      [
+        "Np233",
+        "decay"
+      ],
+      [
+        "U234",
+        "n_gamma"
+      ]
+    ]
+  },
+  "Np233": {
+    "half_life": 203520.0,
+    "n_gamma": 0.0,
+    "products": [
+      [
+        "Pu233",
+        "decay"
+      ]
+    ]
+  },
+  "Pu233": {
+    "half_life": 5095945600000.0,
+    "n_gamma": 4e-25,
+    "products": [
+      [
+        "Pu234",
+        "n_gamma"
+      ]
+    ]
+  },
+  "Pu234": {
+    "half_life": 211680.0,
+    "n_gamma": 5e-26,
+    "products": []
+  },
+  "U234": {
+    "half_life": 7746429600000.0,
+    "n_gamma": 1.5e-25,
+    "products": [
+      [
+        "U235",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U235": {
+    "half_life": 2.2194767e+16,
+    "n_gamma": 6.8e-25,
+    "products": [
+      [
+        "U236",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U236": {
+    "half_life": 738423100000000.0,
+    "n_gamma": 2.5e-25,
+    "products": [
+      [
+        "U237",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U237": {
+    "half_life": 405.0,
+    "n_gamma": 1e-25,
+    "products": [
+      [
+        "Np237",
+        "decay"
+      ]
+    ]
+  },
+  "Np237": {
+    "half_life": 67454280000000.0,
+    "n_gamma": 5e-26,
+    "products": [
+      [
+        "Pu238",
+        "decay"
+      ]
+    ]
+  },
+  "U238": {
+    "half_life": 1.409993568e+17,
+    "n_gamma": 2.68e-24,
+    "products": [
+      [
+        "U239",
+        "n_gamma"
+      ]
+    ]
+  },
+  "U239": {
+    "half_life": 1410.0,
+    "n_gamma": 0.0,
+    "products": [
+      [
+        "Np239",
+        "decay"
+      ]
+    ]
+  },
+  "Np239": {
+    "half_life": 203601.6,
+    "n_gamma": 0.0,
+    "products": [
+      [
+        "Pu239",
+        "decay"
+      ]
+    ]
+  },
+  "Pu239": {
+    "half_life": 760538160000.0,
+    "n_gamma": 2.7e-25,
+    "products": [
+      [
+        "Pu240",
+        "n_gamma"
+      ]
+    ]
+  },
+  "Pu240": {
+    "half_life": 207112528800.0,
+    "n_gamma": 1e-25,
+    "products": [
+      [
+        "Pu241",
+        "n_gamma"
+      ]
+    ]
+  },
+  "Pu241": {
+    "half_life": 454429440.0,
+    "n_gamma": 1.2e-25,
+    "products": [
+      [
+        "Am241",
+        "decay"
+      ]
+    ]
+  },
+  "Am241": {
+    "half_life": 13639194720.0,
+    "n_gamma": 2e-25,
+    "products": [
+      [
+        "Am242",
+        "n_gamma"
+      ]
+    ]
+  },
+  "Am242": {
+    "half_life": 57600.0,
+    "n_gamma": 0.0,
+    "products": [
+      [
+        "Cm242",
+        "decay"
+      ]
+    ]
+  },
+  "Cm242": {
+    "half_life": 14065920.0,
+    "n_gamma": 0.0,
+    "products": [
+      [
+        "Pu238",
+        "decay"
+      ]
+    ]
+  },
+  "Pu238": {
+    "half_life": 2767601520.0,
+    "n_gamma": 0.0,
+    "products": []
+  }
+}
