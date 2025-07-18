@@ -35,8 +35,15 @@ def build_isotope_chain(start, data):
 
         for child, mode in entry.get('products', []):
             to_visit.append(child)
-            if child not in isotopes:
-                isotopes[child] = {'decay': 0.0, 'n_gamma': 0.0, 'prod': []}
+            if child not in isotopes and child in data:
+                child_entry = data[child]
+                decay_child = np.log(2) / child_entry['half_life'] if child_entry['half_life'] > 0 else 0.0
+                n_gamma_child = child_entry.get('n_gamma', 0.0)
+                isotopes[child] = {
+                    'decay': decay_child,
+                    'n_gamma': n_gamma_child,
+                    'prod': []
+                }
             isotopes[child]['prod'].append((parent, mode))
             chain_representation.append(f"{parent} --{mode}--> {child}")
 
@@ -69,16 +76,20 @@ N0 = np.zeros(len(isotope_list))
 N0[index_map[start_isotope]] = 1.0
 
 # Time span
-T_end = 10 * 365.25 * 24 * 3600  # 10 years in seconds
+T_end = 10 * 365.25 * 24 * 3600  # 1000 years in seconds
 t_eval = np.linspace(0, T_end, 1000)
 
-# Solve the system
-sol = solve_ivp(odes, [0, T_end], N0, t_eval=t_eval, method='BDF')
+# Solve the system with tighter tolerances
+sol = solve_ivp(odes, [0, T_end], N0, t_eval=t_eval, method='BDF',
+                rtol=1e-10, atol=1e-14)
 
 # Create results table
 final_concentrations = {iso: sol.y[i][-1] for i, iso in enumerate(isotope_list)}
 df = pd.DataFrame(final_concentrations.items(), columns=['Isotope', 'Final Concentration'])
 df = df.sort_values(by='Final Concentration', ascending=False).reset_index(drop=True)
+
+# Set print format for small values
+pd.options.display.float_format = '{:.6e}'.format
 
 # Display chain and table
 print("\nIsotope Transmutation-Decay Chain:")
