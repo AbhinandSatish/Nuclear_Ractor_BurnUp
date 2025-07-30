@@ -1,5 +1,5 @@
-Isotopes : U235, U238
-Isotope masses (g) : 10.0, 1000.0
+Isotopes : U234, U235, U238
+Isotope masses (g) : 10.0, 10.0, 1000.0
 Time units : d
 Time intervals : 50, 10, 50, 10
 Time steps : 10
