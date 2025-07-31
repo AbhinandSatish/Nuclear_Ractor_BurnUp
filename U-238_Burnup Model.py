@@ -13,7 +13,7 @@ import pandas as pd
 import os
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
-from isotope_data_mod import isotopes
+from junk.isotope_data_mod_v1 import isotopes
 
 df_neutron_energy = pd.read_csv('Neutron_Energy_Groups.txt', sep='\t')
 def load_cross_section_data(file_path):
@@ -221,7 +221,14 @@ N = np.delete(N, 0, axis=1)
 result_dict = {iso: (N[index_map[iso],:]/6.022E+23)*molar_masses[iso] for iso in isotope_list}
 
 plot_list = ['U239']
-
+#final concentrations of all isotopes
+for iso in isotope_list:
+    if iso not in plot_list:
+        plot_list.append(iso)
+# Print final concentrations
+for iso in plot_list:
+    print(f"{iso}: {result_dict[iso][-1]:.4f} g")
+    
 # Plot the results
 plt.figure(figsize=(12, 6))
 for i, iso in enumerate(plot_list):
