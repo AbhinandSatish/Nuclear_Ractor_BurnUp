@@ -1,12 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 31 11:06:33 2025
 
-@author: anupam
-"""
-
-# U-cycle burnup model
 
 import numpy as np
 import pandas as pd
