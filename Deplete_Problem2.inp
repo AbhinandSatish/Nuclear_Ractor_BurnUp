@@ -1,0 +1,7 @@
+Isotopes :Pu239, Pu240, Pu241, Pu242
+Isotope masses (g) : 6500.0, 2500.0, 700.0, 300.0
+Time units : d
+Time intervals : 180, 60, 180, 60, 180, 60
+Time step : 10
+Flux fractions : 1.0E-00, 1.0E-10, 1.0E-00, 1.0E-10, 1.0E-00, 1.0E-10
+Total flux : 8.0E+15

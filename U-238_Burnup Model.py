@@ -46,8 +46,10 @@ flux = pd.read_csv('Flux.txt', header=None).squeeze().values
 flux_sum = np.sum(flux)
 spectrum = flux[:]/flux_sum
 
-# Read 'Deplete_New.inp'
-with open('Deplete_New.inp', 'r') as f:
+# ask user to input the file name
+input_file = input("Enter the input file name (e.g., 'Deplete_Problem3.inp'): ")  
+
+with open(input_file, 'r') as f:
     # lines = [f.readline().strip() for _ in range(2)]
     lines = [line.strip() for line in f.readlines()]
 
@@ -228,6 +230,15 @@ for iso in isotope_list:
 # Print final concentrations
 for iso in plot_list:
     print(f"{iso}: {result_dict[iso][-1]:.4f} g")
+    
+
+#Create a csv file to store the results, column 1 is time in d, rest of the colums are each isotopes and their subiquent masses 
+output_df = pd.DataFrame({'Time (d)': t/86400.0})
+for iso in plot_list:
+    output_df[iso] = result_dict[iso]
+output_df.to_csv('U238_Burnup_Results.csv', index=False)
+print("Results saved to 'U238_Burnup_Results.csv'.")
+
     
 # Plot the results
 plt.figure(figsize=(12, 6))
