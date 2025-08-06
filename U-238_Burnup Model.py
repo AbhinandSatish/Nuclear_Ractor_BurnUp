@@ -221,7 +221,7 @@ for i in range(len(time_intervals)):
 
 N = np.delete(N, 0, axis=1)
 result_dict = {iso: (N[index_map[iso],:]/6.022E+23)*molar_masses[iso] for iso in isotope_list}
-
+"""
 plot_list = ['U239']
 #final concentrations of all isotopes
 for iso in isotope_list:
@@ -254,3 +254,37 @@ plt.grid()
 plt.show()
     
 
+"""
+
+#plot only U235 and no other isotopes
+#ask user to input the isotopes to plot
+plot_list = input("Enter the isotopes to plot (comma-separated, e.g., 'U235,U238'): ").strip().split(',')
+plot_list = [iso.strip() for iso in plot_list if iso.strip() in result_dict]  # Filter valid isotopes
+
+# Print final concentrations
+
+    #plot the results
+#plot where y axis is mass in grams from scale 0-700
+for iso in plot_list:
+    print(f"{iso}: {result_dict[iso][-1]:.4f} g")
+plt.figure(figsize=(12, 6))
+for i, iso in enumerate(plot_list):
+    plt.plot(t/86400.0, result_dict[iso], label=iso)
+plt.xlim(0, max(t/86400.0))  # Set x-axis limit to the maximum time in days
+plt.ylim(0, 700)  # Set y-axis limit to 0-700 grams
+plt.xlabel('Time (d)')
+plt.ylabel('Mass (g)')
+plt.title('Isotope Masses Over Time')
+plt.xscale('linear')
+plt.yscale('linear')
+plt.legend()
+plt.grid()
+plt.show()
+
+# Save only the results for U235 to a CSV file
+output_df = pd.DataFrame({
+    'Time (d)': t/86400.0,
+    plot_list[0]: result_dict[plot_list[0]]
+})
+output_df.to_csv(plot_list[0] + '_Burnup_Results.csv', index=False)
+print(f"Results saved to '{plot_list[0]}_Burnup_Results.csv'.")
