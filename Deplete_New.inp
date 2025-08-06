@@ -1,0 +1,7 @@
+Isotopes : U235, U238
+Isotope masses (g) : 500.0, 10000.0
+Time units : d
+Time intervals : 180, 60, 180, 60
+Time step : 1
+Flux fractions : 1.0E-00, 1.0E-10, 1.0E-00, 1.0E-10
+Total flux : 8.0E+15
