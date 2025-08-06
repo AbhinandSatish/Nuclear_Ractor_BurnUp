@@ -13,7 +13,7 @@ import pandas as pd
 import os
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
-from junk.isotope_data_mod_v1 import isotopes
+from isotope_data_mod import isotopes
 
 df_neutron_energy = pd.read_csv('Neutron_Energy_Groups.txt', sep='\t')
 def load_cross_section_data(file_path):
@@ -46,10 +46,10 @@ flux = pd.read_csv('Flux.txt', header=None).squeeze().values
 flux_sum = np.sum(flux)
 spectrum = flux[:]/flux_sum
 
-# ask user to input the file name
-input_file = input("Enter the input file name (e.g., 'Deplete_Problem3.inp'): ")  
-
-with open(input_file, 'r') as f:
+# Read 'Deplete_New.inp'
+#ask user to input the file name 
+input_file = input("Enter the name of the input file (default: Deplete_Problem1.inp): ")
+with open(input_file if input_file else 'Deplete_Problem1.inp', 'r') as f:
     # lines = [f.readline().strip() for _ in range(2)]
     lines = [line.strip() for line in f.readlines()]
 
@@ -116,22 +116,15 @@ for isotope, mass in materials.items():
 print("Materials concentrations (atoms/cm^3):", materials)
 
 # Convert time intervals to seconds based on the time unit
-if time_unit == 'd':
-    time_intervals = np.array([t * 24 * 3600 for t in time_intervals])  # days to seconds
-    time_step *= 24 * 3600
-elif time_unit == 'y':
-    time_intervals = np.array([t * 365.25 * 24 * 3600 for t in time_intervals])
-    time_step *= 365.25 * 24 * 3600
-elif time_unit == 's':
-    time_intervals = np.array([t for t in time_intervals])
-elif time_unit == 'h':
-    time_intervals = np.array([t * 3600 for t in time_intervals])
-    time_step *= 3600
-elif time_unit == 'min':
-    time_intervals = np.array([t * 60 for t in time_intervals])
-    time_step *= 60
-else:
-    raise ValueError(f"Unsupported time unit: {time_unit}")
+time_unit_dict = {'y': 365.25*24.0*3600.0,
+                  'd': 24.0*3600.0,
+                  'h': 3600.0,
+                  'min': 60.0,
+                  's': 1.0
+                  }
+
+time_intervals = np.array([t*time_unit_dict[time_unit] for t in time_intervals])
+time_step *= time_unit_dict[time_unit]
 
 times = time_intervals.cumsum()
 times = np.insert(times, 0, 0.0)
@@ -202,14 +195,13 @@ sol = None  # Initialize sol to None for later checks
 print("Running the burnup model...")
 
 N = np.zeros_like(N0)
-t = np.concatenate(list(t_eval.values()))
+t = np.concatenate(list(t_eval.values()))/time_unit_dict[time_unit]
 
-for i in range(len(time_intervals)):
+for i in range(time_intervals.shape[0]):
     evaluation_times = t_eval[f'Interval {i+1:d}']
     evaluation_flux = interval_fluxes[:,i]
-    
     sol = solve_ivp(fun = odes, 
-                    t_span = [0.0,evaluation_times[-1]], 
+                    t_span = [evaluation_times[0],evaluation_times[-1]], 
                     y0 = N0[:,-1], 
                     t_eval = evaluation_times,
                     method = 'BDF',
@@ -221,70 +213,33 @@ for i in range(len(time_intervals)):
 
 N = np.delete(N, 0, axis=1)
 result_dict = {iso: (N[index_map[iso],:]/6.022E+23)*molar_masses[iso] for iso in isotope_list}
-"""
-plot_list = ['U239']
-#final concentrations of all isotopes
-for iso in isotope_list:
-    if iso not in plot_list:
-        plot_list.append(iso)
-# Print final concentrations
-for iso in plot_list:
-    print(f"{iso}: {result_dict[iso][-1]:.4f} g")
-    
 
-#Create a csv file to store the results, column 1 is time in d, rest of the colums are each isotopes and their subiquent masses 
-output_df = pd.DataFrame({'Time (d)': t/86400.0})
-for iso in plot_list:
-    output_df[iso] = result_dict[iso]
-output_df.to_csv('U238_Burnup_Results.csv', index=False)
-print("Results saved to 'U238_Burnup_Results.csv'.")
+result_df = pd.DataFrame(result_dict)
+result_df = pd.concat((pd.Series(t,name=f'Time ({time_unit:s})'),result_df),axis=1)
+exc = pd.ExcelWriter('Isotope_Mass_Results.xlsx')
+result_df.to_excel(exc,index=None)
+exc.close()
 
-    
+#user to input plot_list
+plot_list = input("Enter the isotopes to plot (comma-separated, default: all): ")
+plot_list = [iso.strip() for iso in plot_list.split(',')] if plot_list else isotope_list
+# plot_list = isotope_list
+
 # Plot the results
 plt.figure(figsize=(12, 6))
 for i, iso in enumerate(plot_list):
-    plt.plot(t/86400.0, result_dict[iso], label=iso)
+    plt.plot(t, result_dict[iso], label=iso)
 plt.xlabel('Time (s)')
 plt.ylabel('Mass (g)')
 plt.title('Isotope Masses Over Time')
 plt.xscale('linear')
 plt.yscale('linear')
 plt.legend()
-plt.grid()
-plt.show()
-    
 
-"""
-
-#plot only U235 and no other isotopes
-#ask user to input the isotopes to plot
-plot_list = input("Enter the isotopes to plot (comma-separated, e.g., 'U235,U238'): ").strip().split(',')
-plot_list = [iso.strip() for iso in plot_list if iso.strip() in result_dict]  # Filter valid isotopes
-
-# Print final concentrations
-
-    #plot the results
-#plot where y axis is mass in grams from scale 0-700
-for iso in plot_list:
-    print(f"{iso}: {result_dict[iso][-1]:.4f} g")
-plt.figure(figsize=(12, 6))
-for i, iso in enumerate(plot_list):
-    plt.plot(t/86400.0, result_dict[iso], label=iso)
-plt.xlim(0, max(t/86400.0))  # Set x-axis limit to the maximum time in days
-plt.ylim(0, 700)  # Set y-axis limit to 0-700 grams
-plt.xlabel('Time (d)')
-plt.ylabel('Mass (g)')
-plt.title('Isotope Masses Over Time')
-plt.xscale('linear')
-plt.yscale('linear')
-plt.legend()
 plt.grid()
 plt.show()
 
-# Save only the results for U235 to a CSV file
-output_df = pd.DataFrame({
-    'Time (d)': t/86400.0,
-    plot_list[0]: result_dict[plot_list[0]]
-})
-output_df.to_csv(plot_list[0] + '_Burnup_Results.csv', index=False)
-print(f"Results saved to '{plot_list[0]}_Burnup_Results.csv'.")
+#save to csv file
+result_df.to_csv('Isotope_Mass_Results.csv', index=False)
+print("Results saved to 'Isotope_Mass_Results.xlsx' and 'Isotope_Mass_Results.csv'.")
+
