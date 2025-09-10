@@ -9,7 +9,7 @@ The project was developed as part of a training program at **Indira Gandhi Centr
 ## 📂 Repository Contents  
 
 - `U-238_Burnup Model.py` – Main Python script implementing the ODE solver and burnup model.  
-- [`Abhinand Satish Final Report.pdf`](./Reports/Abhinand%20Saitsh%20-%20Uranium%20Transmutation%20decay%20chain%20-%20Presentation.pptxAbhinand%20Satish%20Final%20Report.pdf) – Full project report with theory, methodology, validation, and results.  
+- [`Abhinand Satish Final Report.pdf`](./Abhinand%20Satish%20Final%20Report.pdf) – Full project report with theory, methodology, validation, and results.  
 - [`Abhinand Saitsh - Uranium Transmutation decay chain - Presentation (2).pptx`](./Abhinand%20Saitsh%20-%20Uranium%20Transmutation%20decay%20chain%20-%20Presentation%20(2).pptx) – Presentation slides summarizing the project.  
 
 ---
@@ -73,13 +73,13 @@ cd Nuclear_Ractor_BurnUp
    ```
 
 2. **Run Model**  
-   From the terminal:  
+   From the terminal or regularly:  
 
    ```bash
-   python "U-238_Burnup Model.py" input1.txt
+   python "U-238_Burnup Model.py" 
    ```
 
-   Replace `input1.txt` with your desired input file.  
+   Once you run the file, follow the direction in the terminal to enter the input problem and then the input data, make sure that you have the file already in the same folder as the python file.  
 
 3. **Outputs**  
    - Final isotope concentrations (printed and saved).  
