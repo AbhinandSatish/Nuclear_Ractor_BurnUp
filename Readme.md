@@ -9,7 +9,7 @@ The project was developed as part of a training program at **Indira Gandhi Centr
 ## 📂 Repository Contents  
 
 - `U-238_Burnup Model.py` – Main Python script implementing the ODE solver and burnup model.  
-- [`Abhinand Satish Final Report.pdf`](./https://github.com/AbhinandSatish/Nuclear_Ractor_BurnUp/blob/ba920b06af4606928e1b3efd1f3d5fbffae0cbc2/Reports/Abhinand%20Satish%20Final%20Report.pdf) – Full project report with theory, methodology, validation, and results.  
+- [`Abhinand Satish Final Report.pdf`](./https://github.com/AbhinandSatish/Nuclear_Ractor_BurnUp/blob/main/Reports/Abhinand%20Satish%20Final%20Report.pdf) – Full project report with theory, methodology, validation, and results.  
 - [`Abhinand Saitsh - Uranium Transmutation decay chain - Presentation (2).pptx`](./Abhinand%20Saitsh%20-%20Uranium%20Transmutation%20decay%20chain%20-%20Presentation%20(2).pptx) – Presentation slides summarizing the project.  
 
 ---
